@@ -1,0 +1,61 @@
+{
+  "_comment": "DEMO DATA ONLY. Every entry below is fabricated for hackathon demonstration. Do not interpret presence here as a real-world accusation against any entity.",
+  "domains": [
+    { "domain": "paypa1-secure-login.tk", "category": "phishing", "severity": "high" },
+    { "domain": "amaz0n-verify-account.ml", "category": "phishing", "severity": "high" },
+    { "domain": "netflix-billing-update.xyz", "category": "phishing", "severity": "high" },
+    { "domain": "apple-id-locked.ga", "category": "phishing", "severity": "high" },
+    { "domain": "micr0soft-alert.top", "category": "phishing", "severity": "high" },
+    { "domain": "google-drive-share.cf", "category": "phishing", "severity": "medium" },
+    { "domain": "whatsapp-reward.gq", "category": "scam", "severity": "medium" },
+    { "domain": "bank-secure-verify.click", "category": "phishing", "severity": "high" },
+    { "domain": "faceb00k-support.buzz", "category": "phishing", "severity": "medium" },
+    { "domain": "dropbox-doc-view.work", "category": "phishing", "severity": "medium" },
+    { "domain": "post-office-redelivery.net", "category": "phishing", "severity": "medium" },
+    { "domain": "chase-unlock-alert.com", "category": "phishing", "severity": "high" },
+    { "domain": "steam-wallet-gift.xyz", "category": "scam", "severity": "medium" },
+    { "domain": "irs-tax-refund-claim.info", "category": "fraud", "severity": "high" },
+    { "domain": "malware-delivery-service.com", "category": "malware", "severity": "high" }
+  ],
+  "urls": [
+    { "url": "http://paypa1-secure-login.tk/webscr/login.php", "category": "credential_harvest", "severity": "high" },
+    { "url": "https://amaz0n-verify-account.ml/ap/signin?verify=1", "category": "credential_harvest", "severity": "high" },
+    { "url": "http://netflix-billing-update.xyz/update/payment", "category": "credential_harvest", "severity": "high" },
+    { "url": "http://apple-id-locked.ga/unlock/appleid", "category": "credential_harvest", "severity": "high" },
+    { "url": "https://micr0soft-alert.top/office365/verify", "category": "credential_harvest", "severity": "high" },
+    { "url": "http://google-drive-share.cf/invoice/view", "category": "phishing", "severity": "medium" },
+    { "url": "https://whatsapp-reward.gq/claim/prize", "category": "scam", "severity": "medium" },
+    { "url": "http://bank-secure-verify.click/online/login", "category": "credential_harvest", "severity": "high" },
+    { "url": "http://faceb00k-support.buzz/help/recover", "category": "phishing", "severity": "medium" },
+    { "url": "https://dropbox-doc-view.work/share/contract", "category": "phishing", "severity": "medium" },
+    { "url": "http://post-office-redelivery.net/parcel/fee", "category": "phishing", "severity": "medium" },
+    { "url": "http://chase-unlock-alert.com/verify/card", "category": "credential_harvest", "severity": "high" },
+    { "url": "https://steam-wallet-gift.xyz/redeem/code", "category": "scam", "severity": "medium" },
+    { "url": "http://irs-tax-refund-claim.info/claim/refund", "category": "fraud", "severity": "high" },
+    { "url": "http://malware-delivery-service.com/files/update.exe", "category": "malware", "severity": "high" }
+  ],
+  "email_indicators": [
+    { "pattern_type": "sender_domain", "pattern_value": "paypa1-secure-login.tk", "category": "impersonation", "severity": "high" },
+    { "pattern_type": "sender_domain", "pattern_value": "amaz0n-verify-account.ml", "category": "impersonation", "severity": "high" },
+    { "pattern_type": "subject_keyword", "pattern_value": "verify your account immediately", "category": "phishing", "severity": "high" },
+    { "pattern_type": "subject_keyword", "pattern_value": "your account will be suspended", "category": "phishing", "severity": "high" },
+    { "pattern_type": "subject_keyword", "pattern_value": "unauthorized access detected", "category": "phishing", "severity": "high" },
+    { "pattern_type": "subject_keyword", "pattern_value": "confirm your payment details", "category": "phishing", "severity": "medium" },
+    { "pattern_type": "subject_keyword", "pattern_value": "you have won a prize", "category": "social_engineering", "severity": "medium" },
+    { "pattern_type": "body_phrase", "pattern_value": "we detected unusual sign-in activity", "category": "phishing", "severity": "medium" },
+    { "pattern_type": "body_phrase", "pattern_value": "your account will be permanently closed", "category": "phishing", "severity": "medium" },
+    { "pattern_type": "body_phrase", "pattern_value": "click here to verify your identity", "category": "phishing", "severity": "medium" }
+  ],
+  "phones": [
+    { "phone_e164": "+12025550134", "category": "scam", "severity": "high", "notes": "Demo: impersonation calls" },
+    { "phone_e164": "+18005550199", "category": "premium_fraud", "severity": "medium", "notes": "Demo: premium-rate scam" },
+    { "phone_e164": "+447700900123", "category": "spam", "severity": "medium", "notes": "Demo: SMS spam source (Ofcom drama range)" },
+    { "phone_e164": "+923001112223", "category": "scam", "severity": "high", "notes": "Demo: fraud calls" },
+    { "phone_e164": "+92900123456", "category": "premium_fraud", "severity": "high", "notes": "Demo: premium-rate fraud" },
+    { "phone_e164": "+919800000001", "category": "spam", "severity": "medium", "notes": "Demo: spam campaign" },
+    { "phone_e164": "+97190012345", "category": "premium_fraud", "severity": "medium", "notes": "Demo: premium-rate line" },
+    { "phone_e164": "+61190012345", "category": "premium_fraud", "severity": "medium", "notes": "Demo: premium-rate line" },
+    { "phone_e164": "+499001234567", "category": "premium_fraud", "severity": "medium", "notes": "Demo: premium-rate line" },
+    { "phone_e164": "+923215550000", "category": "scam", "severity": "medium", "notes": "Demo: phishing SMS sender" }
+  ]
+}

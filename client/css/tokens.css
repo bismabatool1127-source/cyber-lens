@@ -1,0 +1,83 @@
+/* ============ Design tokens ============ */
+
+:root {
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Type */
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.5rem;
+
+  /* Radius & shadows */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.25);
+  --shadow-md: 0 6px 24px rgb(0 0 0 / 0.28);
+
+  /* Brand */
+  --accent: #0ea5e9;
+  --accent-strong: #38bdf8;
+  --accent-soft: rgb(14 165 233 / 0.14);
+
+  /* Risk colors — always paired with text labels in the UI */
+  --risk-low: #22c55e;
+  --risk-low-strong: #4ade80;
+  --risk-suspicious: #f59e0b;
+  --risk-suspicious-strong: #fbbf24;
+  --risk-high: #ef4444;
+  --risk-high-strong: #f87171;
+}
+
+/* Dark theme (default) */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --bg-raised: #101a2e;
+  --bg-input: #0e1729;
+  --surface-border: #233150;
+  --text: #e7edf7;
+  --text-secondary: #9fb0c9;
+  --text-muted: #6b7c99;
+  --risk-low-bg: rgb(34 197 94 / 0.12);
+  --risk-low-border: rgb(34 197 94 / 0.45);
+  --risk-suspicious-bg: rgb(245 158 11 / 0.12);
+  --risk-suspicious-border: rgb(245 158 11 / 0.45);
+  --risk-high-bg: rgb(239 68 68 / 0.12);
+  --risk-high-border: rgb(239 68 68 / 0.5);
+  --focus-ring: #7dd3fc;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f7fb;
+  --bg-raised: #ffffff;
+  --bg-input: #ffffff;
+  --surface-border: #d7e0ec;
+  --text: #101828;
+  --text-secondary: #44546b;
+  --text-muted: #7a8aa2;
+  --risk-low-bg: rgb(34 197 94 / 0.1);
+  --risk-low-border: rgb(22 163 74 / 0.4);
+  --risk-suspicious-bg: rgb(245 158 11 / 0.12);
+  --risk-suspicious-border: rgb(180 83 9 / 0.4);
+  --risk-high-bg: rgb(239 68 68 / 0.08);
+  --risk-high-border: rgb(185 28 28 / 0.4);
+  --shadow-sm: 0 1px 3px rgb(16 24 40 / 0.08);
+  --shadow-md: 0 8px 28px rgb(16 24 40 / 0.1);
+  --focus-ring: #0369a1;
+}

@@ -1,0 +1,190 @@
+Cyber-Lens -- UX/UI Design Specification
+
+Design Cyber-Lens as a modern, trustworthy, beginner-friendly cybersecurity web application.
+The design should communicate:
+Security + Simplicity + Trust
+The user should understand what to do within a few seconds of opening the application.
+
+Visual identity
+
+Application name:
+CYBER-LENS
+Tagline:
+Your Digital Security Guard
+The interface should feel like a modern cybersecurity dashboard rather than a complicated technical
+security tool.
+Use a clean dark/light professional visual system with strong contrast and accessible typography.
+Avoid excessive animations, unnecessary gradients, clutter, or overly complicated dashboard widgets.
+
+Home Page
+
+Create a hero section containing:
+CYBER-LENS
+Your Digital Security Guard
+"Analyze suspicious links, emails and phone numbers before you trust them."
+Below it, provide three prominent scanner cards:
+
+URL Scanner
+
+"Check a suspicious link before opening it."
+Button: SCAN URL
+
+                                                                         1
+Email Scanner
+
+"Analyze suspicious emails and detect phishing indicators."
+Button: SCAN EMAIL
+
+Phone Scanner
+
+"Check a phone number for suspicious indicators."
+Button: CHECK PHONE
+Add a small trust/safety message:
+"Cyber-Lens provides risk analysis and should not be treated as a guarantee of safety."
+
+URL Scanner Page
+
+Layout:
+Top:  Back
+Title: URL Security Scanner
+Subtitle: "Paste a suspicious link and Cyber-Lens will analyze it."
+Large input field:
+"Enter URL..."
+Primary button:
+ANALYZE URL
+While scanning:
+Analyzing... Checking format Checking threat indicators Calculating risk
+Do not expose unnecessary technical details to normal users.
+
+URL Result Page
+
+Show a large result card.
+Example:
+HIGH RISK
+
+                                                                         2
+Risk Score 87 / 100
+Then:
+Why this was flagged
+· Known malicious indicator · Suspicious URL structure · Risky domain characteristic
+Recommendation
+"Do not open this link or enter personal information."
+Provide:
+SCAN ANOTHER URL
+
+Email Scanner Page
+
+Provide clearly separated fields:
+Sender Email Subject Email Body
+Use a large textarea for the email body.
+Button:
+ANALYZE EMAIL
+The interface should explain:
+"Cyber-Lens will examine the sender, message content and links found inside the email."
+
+Email Result
+
+Show:
+Email Risk HIGH RISK
+Risk Score 91 / 100
+Detected indicators:
+· Suspicious sender characteristics · Urgency/social-engineering indicators · Suspicious link detected
+Recommendation:
+"Do not click links or provide sensitive information until the sender is verified."
+
+                                                                         3
+If URLs were extracted, optionally show:
+Detected Links 2 links analyzed
+
+Phone Scanner
+
+Title:
+Phone Number Security Check
+Input:
+"Enter phone number"
+Button:
+CHECK NUMBER
+Result should show:
+Phone Risk SUSPICIOUS
+Risk Score 65 / 100
+Reasons:
+· Format is valid · Number has a known risk indicator
+Recommendation:
+"Verify the caller through an independent trusted source."
+
+Navigation
+
+Keep navigation extremely simple.
+Suggested navigation:
+Home URL Scanner Email Scanner Phone Scanner About
+On mobile, use a compact navigation menu.
+
+Result design
+
+Use a consistent result component across all scanners.
+Structure:
+
+                                                                         4
+[Risk Icon]
+RISK STATUS
+Risk Score
+
+Reasons
+
+      1. ...
+      2. ...
+      3. ...
+Recommendation
+...
+[Scan Again]
+The same result component should be reusable across URL, Email and Phone scanners.
+
+Responsive design
+
+The application must work properly on:
+        · desktop
+        · laptop
+        · tablet
+        · mobile
+
+The three scanner cards should stack vertically on small screens.
+Inputs and buttons must be easy to use on mobile.
+
+Accessibility
+
+Do not rely only on color.
+Always display text such as:
+LOW RISK SUSPICIOUS HIGH RISK
+Use accessible labels for all inputs.
+Ensure buttons have clear names.
+Ensure adequate contrast.
+
+                                                                         5
+Empty states
+
+If there are no scan results, show helpful instructions instead of an empty dashboard.
+
+Error states
+
+For invalid input:
+"Please enter a valid URL."
+For server failure:
+"We couldn't complete the analysis right now. Please try again."
+Do not expose raw stack traces or technical errors to users.
+
+Design philosophy
+
+The user should never feel overwhelmed.
+A non-technical person should be able to:
+
+      1. Open Cyber-Lens.
+      2. Choose what they want to check.
+      3. Paste/enter the information.
+      4. Press one button.
+      5. Understand the result immediately.
+Keep the interface polished, minimal and demo-friendly.
+Before implementing the UI, create a page/component hierarchy and explain the proposed design.
+Then implement it.
+
+                                                                         6
+

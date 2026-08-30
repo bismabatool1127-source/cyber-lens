@@ -1,0 +1,285 @@
+Cyber-Lens -- Master Project Specification
+
+You are the lead software architect and senior full-stack engineer for this project.
+
+We are participating in a 4-day AI hackathon. The team consists of only 2 members, and we have limited
+prior coding experience. We are using Qoder as an AI coding agent, so prioritize simplicity, reliability,
+maintainability, and demo readiness over unnecessary complexity.
+
+Project
+
+Build a web-based application called Cyber-Lens.
+
+Cyber-Lens is an AI-assisted digital security guard that helps users analyze potentially dangerous:
+
+      1. URLs
+      2. Emails
+      3. Phone numbers
+The application should provide a risk classification and explain the reasons behind the classification in
+simple language.
+
+Core principle
+
+Do NOT classify an item as safe merely because it is absent from a threat database.
+
+The system must combine:
+
+        · format validation
+        · rule-based indicators
+        · threat-intelligence/database matches
+        · content analysis where applicable
+        · multiple indicators
+        · an explainable risk score
+The possible final classifications should be:
+
+        · LOW RISK
+        · SUSPICIOUS
+        · HIGH RISK / MALICIOUS
+Avoid claiming that an item is "100% safe".
+
+Use wording such as:
+"No known threat detected" when appropriate.
+
+URL Scanner
+
+The user enters a URL.
+
+                                                                         1
+The system should:
+
+      1. Validate URL syntax.
+      2. Normalize the URL safely.
+      3. Analyze suspicious structural indicators.
+      4. Check available threat-intelligence records.
+      5. Check whether the URL/domain has previously been recorded as malicious.
+      6. Produce a risk score.
+      7. Produce a classification.
+      8. Explain the important reasons.
+      9. Give a short safety recommendation.
+
+Email Scanner
+
+The user should be able to provide:
+
+        · sender email
+        · subject
+        · email body
+
+The system should:
+
+      1. Validate the sender email format.
+      2. Analyze sender/domain characteristics.
+      3. Detect suspicious social-engineering indicators.
+      4. Detect suspicious urgency or requests for sensitive information.
+      5. Extract URLs from the email body.
+      6. Analyze extracted URLs using the URL analysis engine.
+      7. Combine the findings.
+      8. Produce an overall risk score and classification.
+      9. Clearly explain the reasons.
+     10. Provide a safety recommendation.
+
+Phone Number Scanner
+
+The user enters a phone number.
+
+The system should:
+
+      1. Validate the number format.
+      2. Validate country-code structure where possible.
+      3. Detect obvious formatting anomalies.
+      4. Check the available risk database.
+      5. Produce a risk score and classification.
+      6. Explain the reasons.
+
+Keep this feature intentionally simple because the project has a strict 4-day development window.
+
+Threat Database
+
+Design the application so that threat intelligence is separated from the analysis logic.
+
+                                                                         2
+The database may contain records for:
+
+        · malicious URLs
+        · suspicious domains
+        · malicious email indicators
+        · suspicious phone numbers
+Create a clean interface/service for querying threat intelligence.
+
+Do not hard-code threat records throughout the frontend.
+
+The system should make it easy to replace the demo database with a real threat-intelligence API later.
+
+Risk Engine
+
+Create a centralized risk-analysis engine.
+
+Do not duplicate risk logic separately inside every UI component.
+
+The engine should return a structured result similar to:
+
+{
+"classification": "SUSPICIOUS",
+"riskScore": 72,
+"confidence": "medium",
+"reasons": [
+"Suspicious URL structure",
+"Known risky domain indicator"
+],
+"recommendation": "Avoid opening the link until it can be verified."
+}
+
+The exact implementation may differ based on the selected technology stack.
+
+Explainability
+
+Every classification must have understandable reasons.
+
+Never show only:
+"Malicious"
+
+Instead show:
+
+        · classification
+        · risk score
+        · important indicators
+        · explanation
+        · recommendation
+
+                                                                         3
+Security and privacy
+
+Do not expose API keys or secrets in frontend code.
+
+Use environment variables for secrets.
+
+Do not permanently store submitted emails or personal information unless explicitly required.
+
+Avoid logging sensitive user input unnecessarily.
+
+Treat all user-provided input as untrusted data.
+
+Do not execute submitted URLs, email content, or other user input directly on the server.
+
+Architecture
+
+Use a simple architecture appropriate for a 4-day hackathon.
+
+Prefer:
+
+        · clear separation of frontend and backend
+        · reusable analysis services
+        · centralized risk engine
+        · simple database/threat-intelligence layer
+        · clean API endpoints
+        · environment variables for secrets
+        · clear error handling
+Do not introduce microservices, unnecessary queues, complicated authentication systems, or other
+enterprise infrastructure unless there is a strong reason.
+
+UX
+
+The application should feel like a modern cybersecurity product.
+
+The main screen should immediately communicate:
+
+CYBER-LENS
+"Your Digital Security Guard"
+
+The user should be able to select:
+
+[ Scan URL ]
+[ Scan Email ]
+[ Check Phone ]
+
+The scan interface should be simple and beginner-friendly.
+
+After scanning, show:
+
+                                                                         4
+Risk Level
+Risk Score
+Threat Status
+Reasons
+Safety Recommendation
+
+Use clear visual hierarchy.
+
+Use color carefully:
+
+        · green = low risk
+        · amber/yellow = suspicious
+        · red = high risk/malicious
+
+Do not rely on color alone; always include text labels.
+
+Dashboard
+
+Create a clean dashboard/home page containing:
+
+        · Cyber-Lens branding
+        · short explanation
+        · three scanning options
+        · recent scan summary if appropriate
+        · simple security tips
+        · professional but minimal visual design
+
+Error handling
+
+The application must gracefully handle:
+
+        · empty input
+        · invalid URL
+        · invalid email
+        · invalid phone number
+        · unavailable threat-intelligence service
+        · API timeout
+        · malformed server response
+        · unexpected errors
+
+Never crash the entire application because one scan fails.
+
+Development strategy
+
+Before writing code:
+
+      1. Inspect the current project.
+      2. Determine the simplest suitable technology stack.
+      3. Create a technical specification.
+      4. Create the folder structure.
+
+                                                                         5
+      5. Identify dependencies.
+      6. Identify required environment variables.
+      7. Identify API endpoints.
+      8. Identify database schema.
+      9. Identify reusable components.
+     10. Identify testing strategy.
+Do not start by generating the entire application in one step.
+After the specification is approved, implement the application incrementally.
+For every major feature:
+      1. implement it
+      2. run it
+      3. test it
+      4. fix errors
+      5. verify the UI
+      6. then move to the next feature.
+Never assume generated code works without testing it.
+
+Important constraint
+
+This is a hackathon MVP with a 4-day deadline.
+Prioritize:
+
+      1. Working application
+      2. Reliable core scanning
+      3. Excellent UX
+      4. Explainable results
+      5. Clean architecture
+      6. Demo readiness
+Do NOT spend time on unnecessary features.
+First produce the technical specification and implementation plan.
+Do not write the application yet.
+
+                                                                         6
+

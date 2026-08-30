@@ -1,0 +1,22 @@
+{
+  "name": "cyber-lens",
+  "version": "1.0.0",
+  "description": "Cyber-Lens - Your Digital Security Guard. AI-assisted analysis of suspicious URLs, emails and phone numbers.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning --env-file-if-exists=.env server/index.js",
+    "dev": "node --no-warnings=ExperimentalWarning --env-file-if-exists=.env --watch server/index.js",
+    "seed": "node --no-warnings=ExperimentalWarning --env-file-if-exists=.env server/seed.js",
+    "test": "node --no-warnings=ExperimentalWarning --test"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0"
+  }
+}
