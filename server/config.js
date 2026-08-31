@@ -13,13 +13,13 @@ function intEnv(name, fallback) {
 export const config = Object.freeze({
   env: process.env.NODE_ENV || 'development',
   port: intEnv('PORT', 3000),
-  dbPath: process.env.DB_PATH || path.join(__dirname, 'data', 'cyberlens.db'),
+  dbPath: process.env.DB_PATH || (process.env.VERCEL ? ':memory:' : path.join(__dirname, 'data', 'cyberlens.db')),
   dataDir: path.join(__dirname, 'data'),
   feed: Object.freeze({
     url: process.env.FEED_URL ?? 'https://openphish.com/feed.txt',
     refreshMs: intEnv('FEED_REFRESH_MS', 6 * 60 * 60 * 1000),
     maxEntries: intEnv('FEED_MAX_ENTRIES', 5000),
-    cachePath: path.join(__dirname, 'data', 'threat-feed-cache.txt'),
+    cachePath: process.env.FEED_CACHE_PATH || (process.env.VERCEL ? '/tmp/threat-feed-cache.txt' : path.join(__dirname, 'data', 'threat-feed-cache.txt')),
   }),
   rateLimit: Object.freeze({
     windowMs: intEnv('RATE_LIMIT_WINDOW_MS', 60_000),
