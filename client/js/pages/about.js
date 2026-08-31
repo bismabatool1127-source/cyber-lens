@@ -11,12 +11,10 @@ export const aboutPage = {
     container.appendChild(
       el('div', { class: 'scanner-page' }, [
         el('a', { class: 'back-link', href: '#/' }, '← Back to home'),
-        el('div', { class: 'scanner-card' }, [
+        el('div', { class: 'panel glass about-content', style: 'padding: var(--space-xl)' }, [
           el('h1', { class: 'scanner-title' }, 'About Cyber-Lens'),
-          el('p', { class: 'scanner-subtitle' }, 'Your Digital Security Guard.'),
-
-          el('p', {}, 'Cyber-Lens helps ordinary users examine suspicious links, emails and phone numbers before trusting them. Instead of simply labelling something "safe" or "dangerous", it follows one principle:'),
-          el('p', { class: 'recommendation' }, 'Detect → Explain → Recommend'),
+          el('p', {}, 'Your Digital Security Guard. Cyber-Lens helps ordinary users examine suspicious links, emails and phone numbers before trusting them. Instead of simply labelling something "safe" or "dangerous", it follows one principle:'),
+          el('p', { class: 'about-principle' }, 'Detect → Explain → Recommend'),
 
           el('h2', { class: 'section-title' }, 'How it works'),
           el('p', {}, 'Every scan combines several layers of analysis: format validation, structural and rule-based indicators, social-engineering language checks, and threat-intelligence matching (a curated database plus a live community phishing feed). The result is an explainable risk score from 0 to 100 with one of three classifications: LOW RISK, SUSPICIOUS or HIGH RISK.'),

@@ -116,6 +116,18 @@ test('recent scans list only redacted summaries', async () => {
   }
 });
 
+test('stats endpoint reports real scan totals and threat-intel counts', async () => {
+  await post('/api/scan/url', { url: 'https://www.wikipedia.org' });
+  const res = await fetch(`${base}/api/stats`);
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.ok(data.scans.total >= 4);
+  assert.ok(data.scans.safe >= 1 && data.scans.malicious >= 1);
+  assert.equal(data.scans.total, data.scans.safe + data.scans.suspicious + data.scans.malicious);
+  assert.ok(data.scans.byType.url >= 1 && data.scans.byType.email >= 1 && data.scans.byType.phone >= 1);
+  assert.ok(Number.isInteger(data.threatIntel.seedRecords) && data.threatIntel.seedRecords > 0);
+});
+
 test('static frontend is served', async () => {
   const res = await fetch(`${base}/`);
   assert.equal(res.status, 200);

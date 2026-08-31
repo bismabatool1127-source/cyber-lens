@@ -1,4 +1,4 @@
-/* ============ Design tokens ============ */
+/* ============ Cyber-Lens design tokens ============ */
 
 :root {
   /* Spacing */
@@ -8,76 +8,121 @@
   --space-lg: 1.5rem;
   --space-xl: 2rem;
   --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
 
   /* Type */
-  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "JetBrains Mono", Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
   --text-xl: 1.375rem;
-  --text-2xl: 1.75rem;
-  --text-3xl: 2.5rem;
+  --text-2xl: clamp(1.6rem, 3vw, 2.1rem);
+  --text-3xl: clamp(2rem, 5vw, 3.25rem);
 
   /* Radius & shadows */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.25);
-  --shadow-md: 0 6px 24px rgb(0 0 0 / 0.28);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 
-  /* Brand */
-  --accent: #0ea5e9;
-  --accent-strong: #38bdf8;
-  --accent-soft: rgb(14 165 233 / 0.14);
+  /* Brand — cyan lens light over deep navy */
+  --cyan: #22d3ee;
+  --cyan-strong: #67e8f9;
+  --cyan-deep: #0891b2;
+  --blue: #3b82f6;
+  --violet: #a78bfa;
 
   /* Risk colors — always paired with text labels in the UI */
-  --risk-low: #22c55e;
-  --risk-low-strong: #4ade80;
-  --risk-suspicious: #f59e0b;
-  --risk-suspicious-strong: #fbbf24;
-  --risk-high: #ef4444;
-  --risk-high-strong: #f87171;
+  --risk-low: #34d399;
+  --risk-low-strong: #6ee7b7;
+  --risk-suspicious: #fbbf24;
+  --risk-suspicious-strong: #fcd34d;
+  --risk-high: #fb7185;
+  --risk-high-strong: #fda4af;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --speed-fast: 160ms;
+  --speed-med: 320ms;
+  --speed-slow: 700ms;
 }
 
-/* Dark theme (default) */
+/* Dark theme (default) — deep space navy */
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0b1220;
-  --bg-raised: #101a2e;
-  --bg-input: #0e1729;
-  --surface-border: #233150;
-  --text: #e7edf7;
-  --text-secondary: #9fb0c9;
-  --text-muted: #6b7c99;
-  --risk-low-bg: rgb(34 197 94 / 0.12);
-  --risk-low-border: rgb(34 197 94 / 0.45);
-  --risk-suspicious-bg: rgb(245 158 11 / 0.12);
-  --risk-suspicious-border: rgb(245 158 11 / 0.45);
-  --risk-high-bg: rgb(239 68 68 / 0.12);
-  --risk-high-border: rgb(239 68 68 / 0.5);
-  --focus-ring: #7dd3fc;
+  --bg: #04070f;
+  --bg-2: #070d1a;
+  --bg-hero: radial-gradient(ellipse 120% 90% at 70% -10%, rgb(34 211 238 / 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 60% at 10% 10%, rgb(139 92 246 / 0.07), transparent 50%),
+    linear-gradient(180deg, #060b17 0%, #04070f 100%);
+  --surface: rgb(10 18 34 / 0.66);
+  --surface-solid: #0b1424;
+  --surface-raised: rgb(15 25 45 / 0.75);
+  --surface-input: rgb(7 13 26 / 0.8);
+  --border: rgb(125 165 255 / 0.13);
+  --border-strong: rgb(125 175 255 / 0.3);
+  --border-focus: rgb(34 211 238 / 0.65);
+  --text: #e9f0fb;
+  --text-secondary: #a3b4cf;
+  --text-muted: #64769a;
+  --accent: var(--cyan);
+  --accent-soft: rgb(34 211 238 / 0.12);
+  --accent-text: #7de6f7;
+  --grid-line: rgb(125 165 255 / 0.05);
+  --glow-cyan: 0 0 24px rgb(34 211 238 / 0.35);
+  --glow-soft: 0 0 60px rgb(34 211 238 / 0.14);
+  --shadow-sm: 0 2px 10px rgb(0 0 0 / 0.35);
+  --shadow-md: 0 12px 40px rgb(0 0 0 / 0.45);
+  --shadow-lift: 0 18px 50px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(125 175 255 / 0.08);
+  --risk-low-bg: rgb(52 211 153 / 0.1);
+  --risk-low-border: rgb(52 211 153 / 0.42);
+  --risk-suspicious-bg: rgb(251 191 36 / 0.1);
+  --risk-suspicious-border: rgb(251 191 36 / 0.42);
+  --risk-high-bg: rgb(251 113 133 / 0.1);
+  --risk-high-border: rgb(251 113 133 / 0.45);
+  --focus-ring: #67e8f9;
+  --header-bg: rgb(5 9 18 / 0.72);
+  --lens-tint: rgb(34 211 238 / 0.06);
 }
 
 /* Light theme */
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #f4f7fb;
-  --bg-raised: #ffffff;
-  --bg-input: #ffffff;
-  --surface-border: #d7e0ec;
-  --text: #101828;
-  --text-secondary: #44546b;
-  --text-muted: #7a8aa2;
-  --risk-low-bg: rgb(34 197 94 / 0.1);
-  --risk-low-border: rgb(22 163 74 / 0.4);
+  --bg: #f2f6fc;
+  --bg-2: #e9eff9;
+  --bg-hero: radial-gradient(ellipse 120% 90% at 70% -10%, rgb(8 145 178 / 0.1), transparent 55%),
+    radial-gradient(ellipse 80% 60% at 10% 10%, rgb(139 92 246 / 0.08), transparent 50%),
+    linear-gradient(180deg, #eef4fc 0%, #f2f6fc 100%);
+  --surface: rgb(255 255 255 / 0.78);
+  --surface-solid: #ffffff;
+  --surface-raised: rgb(255 255 255 / 0.9);
+  --surface-input: #ffffff;
+  --border: rgb(15 40 80 / 0.12);
+  --border-strong: rgb(15 40 80 / 0.24);
+  --border-focus: rgb(8 145 178 / 0.65);
+  --text: #0d1826;
+  --text-secondary: #3f5168;
+  --text-muted: #74849b;
+  --accent: var(--cyan-deep);
+  --accent-soft: rgb(8 145 178 / 0.1);
+  --accent-text: #0e7490;
+  --grid-line: rgb(15 40 80 / 0.05);
+  --glow-cyan: 0 0 20px rgb(8 145 178 / 0.25);
+  --glow-soft: 0 0 50px rgb(8 145 178 / 0.12);
+  --shadow-sm: 0 2px 8px rgb(16 24 40 / 0.07);
+  --shadow-md: 0 12px 34px rgb(16 24 40 / 0.1);
+  --shadow-lift: 0 18px 44px rgb(16 24 40 / 0.14), 0 0 0 1px rgb(15 40 80 / 0.05);
+  --risk-low-bg: rgb(16 185 129 / 0.1);
+  --risk-low-border: rgb(16 140 100 / 0.4);
   --risk-suspicious-bg: rgb(245 158 11 / 0.12);
-  --risk-suspicious-border: rgb(180 83 9 / 0.4);
-  --risk-high-bg: rgb(239 68 68 / 0.08);
-  --risk-high-border: rgb(185 28 28 / 0.4);
-  --shadow-sm: 0 1px 3px rgb(16 24 40 / 0.08);
-  --shadow-md: 0 8px 28px rgb(16 24 40 / 0.1);
-  --focus-ring: #0369a1;
+  --risk-suspicious-border: rgb(180 83 9 / 0.42);
+  --risk-high-bg: rgb(244 63 94 / 0.08);
+  --risk-high-border: rgb(190 30 60 / 0.4);
+  --focus-ring: #0891b2;
+  --header-bg: rgb(255 255 255 / 0.72);
+  --lens-tint: rgb(8 145 178 / 0.06);
 }

@@ -3,10 +3,13 @@
  * Deliberately NOT persisted: user submissions are private and forgotten on restart.
  */
 
+import { countScan } from './scanStats.js';
+
 const CAPACITY = 10;
 const buffer = [];
 
 export function recordScan(summary) {
+  countScan(summary);
   buffer.unshift({ ...summary, timestamp: new Date().toISOString() });
   if (buffer.length > CAPACITY) buffer.length = CAPACITY;
 }

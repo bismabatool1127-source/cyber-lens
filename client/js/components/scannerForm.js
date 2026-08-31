@@ -14,8 +14,10 @@ import { showToast } from './toast.js';
  * @param {() => object} opts.buildPayload
  * @param {() => Record<string,string>} opts.validate  returns map of fieldId -> error message (empty when ok)
  * @param {(result:object) => Node} opts.renderResult
+ * @param {() => void} [opts.onStart]      optional hook when a scan request begins
+ * @param {(result:object|null) => void} [opts.onSettled]  optional hook with the result, or null on error
  */
-export function wireScannerForm({ form, button, output, analyzing, endpoint, buildPayload, validate, renderResult }) {
+export function wireScannerForm({ form, button, output, analyzing, endpoint, buildPayload, validate, renderResult, onStart, onSettled }) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -43,15 +45,18 @@ export function wireScannerForm({ form, button, output, analyzing, endpoint, bui
     output.innerHTML = '';
     output.appendChild(analyzing.element);
     analyzing.start();
+    onStart?.();
 
     try {
       const result = await apiPost(endpoint, buildPayload());
       output.innerHTML = '';
       output.appendChild(renderResult(result));
       output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      onSettled?.(result);
     } catch (err) {
       output.innerHTML = '';
       showToast(err.message || "We couldn't complete the analysis right now. Please try again.", 'error');
+      onSettled?.(null);
     } finally {
       analyzing.stop();
       button.disabled = false;

@@ -1,31 +1,81 @@
 import { el } from './el.js';
 
 const LABELS = { LOW: 'LOW RISK', SUSPICIOUS: 'SUSPICIOUS', HIGH: 'HIGH RISK' };
-const CONTEXT = { url: 'URL Risk', email: 'Email Risk', phone: 'Phone Risk' };
-
-const ICONS = {
-  LOW: 'M12 1.8 3.5 5v6.1c0 5.2 3.6 9.4 8.5 11.1 4.9-1.7 8.5-5.9 8.5-11.1V5L12 1.8Zm-1.2 13.6-3-3 1.4-1.4 1.6 1.6 4.8-4.8 1.4 1.4-6.2 6.2Z',
-  SUSPICIOUS: 'M12 1.8 3.5 5v6.1c0 5.2 3.6 9.4 8.5 11.1 4.9-1.7 8.5-5.9 8.5-11.1V5L12 1.8Zm1 13.7h-2v-2h2v2Zm0-3.5h-2V7h2v5Z',
-  HIGH: 'M12 1.8 3.5 5v6.1c0 5.2 3.6 9.4 8.5 11.1 4.9-1.7 8.5-5.9 8.5-11.1V5L12 1.8Zm3.6 12.4-1.4 1.4L12 13.4l-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2Z',
+const ASSESSMENT = {
+  LOW: 'No known threat detected — this does not guarantee absolute safety, so stay alert.',
+  SUSPICIOUS: 'Several suspicious signals were found. Treat this with caution and verify through official channels.',
+  HIGH: 'Strong malicious signals detected. Avoid any interaction with this item.',
 };
+const THREAT_LEVEL = { LOW: 'Low', SUSPICIOUS: 'Elevated', HIGH: 'Critical' };
+const CONTEXT = { url: 'URL analysis', email: 'Email analysis', phone: 'Phone analysis' };
+
+const GAUGE_R = 70;
+const CIRCUMFERENCE = 2 * Math.PI * GAUGE_R;
+
+function svgEl(tag, attrs = {}) {
+  const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  return node;
+}
+
+function radialGauge(score) {
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+
+  const track = svgEl('circle', { class: 'gauge-track', cx: '80', cy: '80', r: String(GAUGE_R) });
+  const arc = svgEl('circle', {
+    class: 'gauge-arc',
+    cx: '80',
+    cy: '80',
+    r: String(GAUGE_R),
+    'stroke-dasharray': String(CIRCUMFERENCE),
+    'stroke-dashoffset': reducedMotion ? String(CIRCUMFERENCE * (1 - score / 100)) : String(CIRCUMFERENCE),
+  });
+  const svg = svgEl('svg', { viewBox: '0 0 160 160', role: 'img', 'aria-label': `Risk score ${score} out of 100` });
+  svg.appendChild(track);
+  svg.appendChild(arc);
+
+  const scoreEl = el('span', { class: 'gauge-score', 'aria-hidden': 'true' }, reducedMotion ? String(score) : '0');
+  const gauge = el('div', { class: 'gauge' }, [
+    svg,
+    el('div', { class: 'gauge-center' }, [scoreEl, el('span', { class: 'gauge-max' }, '/ 100'), el('span', { class: 'gauge-caption' }, 'Risk score')]),
+  ]);
+
+  if (!reducedMotion) {
+    setTimeout(() => {
+      arc.setAttribute('stroke-dashoffset', String(CIRCUMFERENCE * (1 - score / 100)));
+    }, 40);
+    const start = performance.now();
+    const tick = (now) => {
+      const k = Math.min((now - start) / 950, 1);
+      const eased = 1 - Math.pow(1 - k, 3);
+      scoreEl.textContent = String(Math.round(score * eased));
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    setTimeout(() => {
+      scoreEl.textContent = String(score);
+    }, 1050);
+  }
+
+  return gauge;
+}
 
 /**
- * Shared result component used by all three scanners.
+ * Shared result component used by all three scanners (signature preserved).
  * @param {object} result  risk engine result
  * @param {{scanType:'url'|'email'|'phone', extra?: Node|null, actions?: Node|null}} options
  */
 export function renderResultCard(result, { scanType, extra = null, actions = null }) {
   const level = LABELS[result.classification] ? result.classification : 'SUSPICIOUS';
+  const triggered = (result.indicators || []).filter((i) => i.triggered);
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  icon.setAttribute('viewBox', '0 0 24 24');
-  icon.setAttribute('width', '34');
-  icon.setAttribute('height', '34');
-  icon.setAttribute('aria-hidden', 'true');
-  const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  iconPath.setAttribute('fill', 'currentColor');
-  iconPath.setAttribute('d', ICONS[level]);
-  icon.appendChild(iconPath);
+  const meta = el('div', { class: 'result-meta' }, [
+    el('span', { class: 'meta-chip' }, ['Threat level ', el('strong', {}, THREAT_LEVEL[level])]),
+    el('span', { class: 'meta-chip' }, ['Confidence ', el('strong', {}, result.confidence)]),
+    el('span', { class: 'meta-chip' }, [el('strong', {}, CONTEXT[scanType])]),
+    el('span', { class: 'meta-chip mono' }, `Scanned ${time}`),
+  ]);
 
   const reasons = el(
     'ol',
@@ -33,27 +83,40 @@ export function renderResultCard(result, { scanType, extra = null, actions = nul
     result.reasons.length ? result.reasons.map((r) => el('li', {}, r)) : [el('li', {}, 'No significant suspicious indicators were detected.')]
   );
 
-  const card = el('section', { class: `result-card risk-${level}`, 'aria-label': 'Analysis result' }, [
-    el('div', { class: 'result-header' }, [
-      el('span', { class: 'result-icon' }, icon),
-      el('div', {}, [
-        el('p', { class: 'result-status', role: 'heading', 'aria-level': '2' }, LABELS[level]),
-        el('p', { class: 'result-context' }, `${CONTEXT[scanType]} · Confidence: ${result.confidence}`),
-      ]),
-    ]),
-    el('div', { class: 'result-score-row' }, [
-      el('div', { class: 'result-score-label' }, [
-        el('span', {}, 'Risk Score'),
-        el('span', {}, `${result.riskScore} / 100`),
-      ]),
-      el('div', { class: 'score-bar', role: 'img', 'aria-label': `Risk score ${result.riskScore} out of 100` }, [
-        el('div', { class: 'score-bar-fill', style: `width:${result.riskScore}%` }),
+  const indicators = el(
+    'div',
+    { class: 'indicator-grid' },
+    triggered.length
+      ? triggered.map((i) =>
+          el('div', { class: 'indicator-chip' }, [
+            el('p', { class: 'indicator-chip-name' }, [el('span', {}, i.name), el('span', { class: 'indicator-chip-weight' }, `w:${i.weight}`)]),
+            el('p', { class: 'indicator-chip-detail' }, i.detail),
+          ])
+        )
+      : [el('p', { class: 'empty-state' }, 'No detection indicators were triggered by this item.')]
+  );
+
+  return el('section', { class: `result-card glass risk-${level}`, 'aria-label': 'Analysis result' }, [
+    el('div', { class: 'result-top' }, [
+      radialGauge(result.riskScore),
+      el('div', { class: 'result-headline' }, [
+        el('h2', { class: 'result-status-title', role: 'heading', 'aria-level': '2' }, LABELS[level]),
+        el('p', { class: 'result-assessment' }, ASSESSMENT[level]),
+        meta,
       ]),
     ]),
     el('div', { class: 'result-body' }, [
+      el('div', { class: 'result-section' }, [el('h3', {}, 'Why this was flagged'), reasons]),
       el('div', { class: 'result-section' }, [
-        el('h3', {}, 'Why this was flagged'),
-        reasons,
+        el('h3', {}, [
+          'Detection indicators',
+          el(
+            'span',
+            { class: 'signals-line' },
+            `${triggered.length} of ${(result.indicators || []).length} signals triggered`
+          ),
+        ]),
+        indicators,
       ]),
       extra,
       el('div', { class: 'result-section' }, [
@@ -63,6 +126,4 @@ export function renderResultCard(result, { scanType, extra = null, actions = nul
       actions,
     ]),
   ]);
-
-  return card;
 }

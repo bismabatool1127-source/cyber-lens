@@ -49,7 +49,7 @@ export function createApp() {
   app.use('/api/scan/url', createUrlRouter({ threatIntel, recordScan }));
   app.use('/api/scan/email', createEmailRouter({ threatIntel, recordScan }));
   app.use('/api/scan/phone', createPhoneRouter({ threatIntel, recordScan }));
-  app.use('/api', createMetaRouter());
+  app.use('/api', createMetaRouter({ db, feed }));
 
   app.use(express.static(path.join(__dirname, '..', 'client')));
   app.use((req, res) => {
