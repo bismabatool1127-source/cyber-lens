@@ -98,6 +98,16 @@ Email scans additionally return `extractedUrls` (each analyzed by the URL engine
 5. `+92 300 1112223` (demo record) → HIGH; `+44 20 7946 0018` → LOW with "Format is valid".
 6. Any URL currently listed in the live OpenPhish feed → HIGH via live threat intel.
 
+## Deploy (free, 24/7)
+
+The repo ships a Render Blueprint (`render.yaml`).
+
+1. Sign in at https://dashboard.render.com with your GitHub account.
+2. **New → Web Service**, choose the `cyber-lens` repository (Render reads `render.yaml` automatically).
+3. Click **Create Web Service** — the app is live at `https://cyber-lens.onrender.com` (exact URL shown in the dashboard) after ~2 minutes.
+
+The free instance sleeps when idle; the first request after a long idle takes ~30 s. Every push to `main` redeploys automatically.
+
 ## Limitations & future work
 
 - Punycode domains are flagged but not decoded to their visual form.
