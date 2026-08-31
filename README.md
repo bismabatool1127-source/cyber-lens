@@ -100,13 +100,13 @@ Email scans additionally return `extractedUrls` (each analyzed by the URL engine
 
 ## Deploy (free, 24/7)
 
-The repo ships a Render Blueprint (`render.yaml`).
+**Live: https://cyber-lens-khaki.vercel.app** (Vercel Hobby — free, no card, no sleep).
 
-1. Sign in at https://dashboard.render.com with your GitHub account.
-2. **New → Web Service**, choose the `cyber-lens` repository (Render reads `render.yaml` automatically).
-3. Click **Create Web Service** — the app is live at `https://cyber-lens.onrender.com` (exact URL shown in the dashboard) after ~2 minutes.
+The repo ships `vercel.json` + `api/index.js` (the Express app as a serverless handler; in-memory SQLite seeded on cold start). To redeploy from scratch:
 
-The free instance sleeps when idle; the first request after a long idle takes ~30 s. Every push to `main` redeploys automatically.
+1. Sign in at https://vercel.com with your GitHub account.
+2. **Add New → Project**, import the `cyber-lens` repository (preset stays **Other**, no build command needed).
+3. Click **Deploy** — live in ~1 minute. Every push to `main` redeploys automatically.
 
 ## Limitations & future work
 
