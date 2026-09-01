@@ -4,6 +4,8 @@ import { createScannerConsole } from '../components/scannerConsole.js';
 import { createDashboard } from '../components/dashboard.js';
 import { createThreatNet } from '../components/threatNet.js';
 import { createFeatures } from '../components/features.js';
+import { createHowItWorks } from '../components/howItWorks.js';
+import { createExampleResult } from '../components/exampleResult.js';
 import { createGlobe } from '../three/globe.js';
 import { observeReveals } from '../utils/reveal.js';
 
@@ -45,12 +47,23 @@ export const homePage = {
       },
     });
 
+    const scrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth';
+    const scrollToSection = (id) => document.getElementById(id)?.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
+    const focusScanner = () => {
+      scrollToSection('scanner-console');
+      document.getElementById('url-input')?.focus({ preventScroll: true });
+    };
+
     const hero = el('section', { class: 'hero' }, [
       el('div', { class: 'container hero-grid' }, [
         el('div', { class: 'hero-copy' }, [
-          el('p', { class: 'hero-badge' }, [svgIcon('shield', 15), 'AI-assisted security analysis']),
+          el('p', { class: 'hero-badge' }, [svgIcon('shield', 15), 'Automated security analysis']),
           el('h1', { class: 'hero-title' }, ['See Threats ', el('span', { class: 'accent' }, 'Before They Become Breaches.')]),
           el('p', { class: 'hero-sub' }, 'Analyze links, emails and phone numbers with intelligent security insights.'),
+          el('div', { class: 'hero-ctas' }, [
+            el('button', { class: 'btn btn-gold', type: 'button', onclick: focusScanner }, [svgIcon('radar', 18), 'Scan Something Now']),
+            el('button', { class: 'btn btn-ghost', type: 'button', onclick: () => scrollToSection('how-it-works') }, 'How It Works'),
+          ]),
           console_.element,
           el('div', { class: 'hero-chips' }, [
             el('span', { class: 'hero-chip' }, [svgIcon('shieldCheck', 14), 'Nothing you scan is stored']),
@@ -73,6 +86,9 @@ export const homePage = {
     });
 
     /* ---------- sections ---------- */
+    container.appendChild(createHowItWorks());
+    container.appendChild(createExampleResult());
+
     this._dash = createDashboard();
     container.appendChild(this._dash);
 
@@ -106,6 +122,16 @@ export const homePage = {
             TIPS.map((tip) => el('li', {}, [el('span', { class: 'tip-icon', 'aria-hidden': 'true' }, '›'), el('span', {}, tip)]))
           )
         ),
+      ])
+    );
+
+    container.appendChild(
+      el('section', { class: 'section final-cta-section', id: 'final-cta' }, [
+        el('div', { class: 'final-cta glass reveal' }, [
+          el('h2', { class: 'final-cta-title' }, 'Seen something suspicious?'),
+          el('p', { class: 'final-cta-sub' }, 'Check it with Cyber-Lens before you click, reply or call back. It takes seconds.'),
+          el('button', { class: 'btn btn-gold', type: 'button', onclick: focusScanner }, [svgIcon('radar', 18), 'Scan Something Now']),
+        ]),
       ])
     );
 

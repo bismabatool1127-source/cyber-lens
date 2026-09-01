@@ -109,14 +109,17 @@ export function renderResultCard(result, { scanType, extra = null, actions = nul
       el('div', { class: 'result-section' }, [el('h3', {}, 'Why this was flagged'), reasons]),
       el('div', { class: 'result-section' }, [
         el('h3', {}, [
-          'Detection indicators',
+          'Detection summary',
           el(
             'span',
             { class: 'signals-line' },
             `${triggered.length} of ${(result.indicators || []).length} signals triggered`
           ),
         ]),
-        indicators,
+        el('details', { class: 'tech-details', open: triggered.length > 0 }, [
+          el('summary', {}, `Technical details — ${triggered.length} indicator${triggered.length === 1 ? '' : 's'}`),
+          indicators,
+        ]),
       ]),
       extra,
       el('div', { class: 'result-section' }, [

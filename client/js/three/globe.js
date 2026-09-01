@@ -7,8 +7,10 @@
  */
 
 const FIB = (i, n, r = 1) => {
-  const phi = Math.acos(1 - (2 * (i + 0.5)) / n);
-  const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+  const idx = ((i % n) + n) % n;
+  const arg = Math.max(-1, Math.min(1, 1 - (2 * (idx + 0.5)) / n));
+  const phi = Math.acos(arg);
+  const theta = Math.PI * (1 + Math.sqrt(5)) * idx;
   return [Math.sin(phi) * Math.cos(theta) * r, Math.cos(phi) * r, Math.sin(phi) * Math.sin(theta) * r];
 };
 
@@ -71,7 +73,7 @@ export async function createGlobe(canvas) {
   }
   const gridGeo = new THREE.BufferGeometry();
   gridGeo.setAttribute('position', new THREE.Float32BufferAttribute(gridVerts, 3));
-  const gridBase = new THREE.Color(0x38bdf8);
+  const gridBase = new THREE.Color(0x2fa8e0);
   const gridMat = new THREE.LineBasicMaterial({ color: gridBase.clone(), transparent: true, opacity: 0.17 });
   globe.add(new THREE.LineSegments(gridGeo, gridMat));
 
@@ -81,7 +83,7 @@ export async function createGlobe(canvas) {
   for (let i = 0; i < NODE_COUNT; i++) nodeVerts.push(...FIB(i, NODE_COUNT, 1.005));
   const nodeGeo = new THREE.BufferGeometry();
   nodeGeo.setAttribute('position', new THREE.Float32BufferAttribute(nodeVerts, 3));
-  const nodeBase = new THREE.Color(0x7dd3fc);
+  const nodeBase = new THREE.Color(0x8fd0ef);
   const nodeMat = new THREE.PointsMaterial({
     color: nodeBase.clone(),
     size: 0.021,
@@ -119,14 +121,14 @@ export async function createGlobe(canvas) {
   const arcGroup = new THREE.Group();
   for (const curve of curves) {
     const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(42));
-    arcGroup.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.2 })));
+    arcGroup.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x6cc4ee, transparent: true, opacity: 0.2 })));
   }
   globe.add(arcGroup);
 
   const pulseGeo = new THREE.BufferGeometry();
   pulseGeo.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(curves.length * 3), 3));
   const pulseMat = new THREE.PointsMaterial({
-    color: 0xa5f3fc,
+    color: 0xb9dff2,
     size: 0.045,
     transparent: true,
     opacity: 0.95,
@@ -138,7 +140,7 @@ export async function createGlobe(canvas) {
 
   /* ---- lens rings ---- */
   const ringMatA = new THREE.MeshBasicMaterial({
-    color: 0x22d3ee,
+    color: 0x2fa8e0,
     transparent: true,
     opacity: 0.3,
     side: THREE.DoubleSide,
@@ -152,7 +154,7 @@ export async function createGlobe(canvas) {
   const ringB = new THREE.Mesh(
     new THREE.RingGeometry(1.58, 1.588, 96),
     new THREE.MeshBasicMaterial({
-      color: 0x818cf8,
+      color: 0xe0b458,
       transparent: true,
       opacity: 0.16,
       side: THREE.DoubleSide,

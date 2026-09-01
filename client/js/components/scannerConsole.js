@@ -21,8 +21,8 @@ function isValidUrlInput(value) {
 }
 
 const MODES = [
-  { id: 'url', label: 'URL Scan', icon: 'url' },
   { id: 'email', label: 'Email Scan', icon: 'email' },
+  { id: 'url', label: 'URL Scan', icon: 'url' },
   { id: 'phone', label: 'Phone Scan', icon: 'phone' },
 ];
 
@@ -273,7 +273,7 @@ export function createScannerConsole({ initialMode = 'url', onScanStart, onScanR
   );
   panes.phone = el('div', { class: 'console-pane', role: 'tabpanel' }, phoneForm);
 
-  const consoleEl = el('div', { class: 'console glass' }, [
+  const consoleEl = el('div', { class: 'console glass', id: 'scanner-console' }, [
     tabList,
     el('div', { class: 'console-body' }, [panes.url, panes.email, panes.phone, output]),
     status,

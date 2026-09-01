@@ -16,6 +16,9 @@ export const aboutPage = {
           el('p', {}, 'Your Digital Security Guard. Cyber-Lens helps ordinary users examine suspicious links, emails and phone numbers before trusting them. Instead of simply labelling something "safe" or "dangerous", it follows one principle:'),
           el('p', { class: 'about-principle' }, 'Detect → Explain → Recommend'),
 
+          el('h2', { class: 'section-title' }, 'Why Cyber-Lens'),
+          el('p', {}, 'Phishing and scam attempts target everyday people, not security experts — and most security tools speak in jargon that leaves non-technical users more confused, not safer. Cyber-Lens exists to close that gap: take the same suspicious content a security team would inspect, and explain the verdict in plain language anyone can act on.'),
+
           el('h2', { class: 'section-title' }, 'How it works'),
           el('p', {}, 'Every scan combines several layers of analysis: format validation, structural and rule-based indicators, social-engineering language checks, and threat-intelligence matching (a curated database plus a live community phishing feed). The result is an explainable risk score from 0 to 100 with one of three classifications: LOW RISK, SUSPICIOUS or HIGH RISK.'),
 

@@ -35,9 +35,9 @@ export function createThreatNet() {
     el('div', { class: 'net-caption' }, [
       el('span', {}, 'Simulated network model — illustrates what continuous observation looks like.'),
       el('div', { class: 'net-legend' }, [
-        el('span', {}, [el('i', { style: 'background:#38bdf8' }), 'Monitored node']),
+        el('span', {}, [el('i', { style: 'background:#2fa8e0' }), 'Monitored node']),
         el('span', {}, [el('i', { style: 'background:#fb7185' }), 'Threat indicator']),
-        el('span', {}, [el('i', { style: 'background:#a5f3fc' }), 'Data in transit']),
+        el('span', {}, [el('i', { style: 'background:#b9dff2' }), 'Data in transit']),
       ]),
     ]),
   ]);
@@ -118,7 +118,7 @@ export function createThreatNet() {
         const [a, b] = edges[p.edge];
         const x = (nodes[a].x + (nodes[b].x - nodes[a].x) * p.t) * w;
         const y = (nodes[a].y + (nodes[b].y - nodes[a].y) * p.t) * h;
-        ctx.fillStyle = nodes[a].threat || nodes[b].threat ? 'rgba(251,113,133,0.8)' : 'rgba(165,243,252,0.85)';
+        ctx.fillStyle = nodes[a].threat || nodes[b].threat ? 'rgba(251,113,133,0.8)' : 'rgba(185,223,242,0.85)';
         ctx.beginPath();
         ctx.arc(x, y, 1.6, 0, Math.PI * 2);
         ctx.fill();
@@ -137,16 +137,16 @@ export function createThreatNet() {
         ctx.fill();
         ctx.fillStyle = 'rgba(251,113,133,0.95)';
       } else if (i === hovered) {
-        ctx.fillStyle = 'rgba(103,232,249,0.95)';
+        ctx.fillStyle = 'rgba(108,196,238,0.95)';
       } else {
-        ctx.fillStyle = 'rgba(56,189,248,0.8)';
+        ctx.fillStyle = 'rgba(47,168,224,0.8)';
       }
       ctx.beginPath();
       ctx.arc(x, y, node.r, 0, Math.PI * 2);
       ctx.fill();
 
       if (i === hovered) {
-        ctx.strokeStyle = 'rgba(103,232,249,0.9)';
+        ctx.strokeStyle = 'rgba(108,196,238,0.9)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(x, y, node.r + 5, 0, Math.PI * 2);

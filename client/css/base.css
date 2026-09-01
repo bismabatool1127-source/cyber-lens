@@ -78,7 +78,7 @@ svg {
 }
 
 ::selection {
-  background: rgb(34 211 238 / 0.28);
+  background: rgb(47 168 224 / 0.3);
 }
 
 :focus-visible {
