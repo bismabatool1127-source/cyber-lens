@@ -24,17 +24,26 @@ const STEPS = [
 ];
 
 export function createHowItWorks() {
-  return el('section', { class: 'section', id: 'how-it-works' }, [
+  const section = el('section', { class: 'section', id: 'how-it-works' }, [
     el('div', { class: 'section-head reveal' }, [
       el('p', { class: 'section-kicker' }, 'How it works'),
       el('h2', { class: 'section-title' }, 'From suspicion to clarity in five steps'),
       el('p', { class: 'section-sub' }, 'Detect, explain, recommend — the philosophy behind every Cyber-Lens analysis.'),
     ]),
+    el('div', { class: 'pipeline reveal', role: 'group', 'aria-label': 'Analysis pipeline. Select a step to highlight its card below.' }, [
+      el('span', { class: 'pipeline-line', 'aria-hidden': 'true' }),
+      ...STEPS.map((step, i) =>
+        el('button', { class: 'pipe-node', type: 'button', 'data-step': String(i), 'aria-pressed': 'false' }, [
+          el('span', { class: 'pipe-dot', 'aria-hidden': 'true' }, String(i + 1)),
+          el('span', { class: 'pipe-label' }, step.title),
+        ])
+      ),
+    ]),
     el(
       'ol',
       { class: 'steps reveal' },
       STEPS.map((step, i) =>
-        el('li', { class: 'step glass' }, [
+        el('li', { class: 'step glass', id: `hiw-step-${i}` }, [
           el('span', { class: 'step-number', 'aria-hidden': 'true' }, String(i + 1).padStart(2, '0')),
           el('h3', { class: 'step-title' }, step.title),
           el('p', { class: 'step-desc' }, step.desc),
@@ -42,4 +51,19 @@ export function createHowItWorks() {
       )
     ),
   ]);
+
+  const pipeline = section.querySelector('.pipeline');
+  pipeline.addEventListener('click', (e) => {
+    const btn = e.target.closest('.pipe-node');
+    if (!btn) return;
+    const wasPressed = btn.getAttribute('aria-pressed') === 'true';
+    for (const node of pipeline.querySelectorAll('.pipe-node')) node.setAttribute('aria-pressed', 'false');
+    for (const card of section.querySelectorAll('.step')) card.classList.remove('step-active');
+    if (!wasPressed) {
+      btn.setAttribute('aria-pressed', 'true');
+      section.querySelector(`#hiw-step-${btn.dataset.step}`)?.classList.add('step-active');
+    }
+  });
+
+  return section;
 }
